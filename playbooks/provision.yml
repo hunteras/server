@@ -1,0 +1,40 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  roles:
+    - apt
+    
+  tasks:
+  - name: install utilities
+    apt:
+      name={{ item }}
+      state=present
+      update_cache=no
+    with_items:
+      - vim
+      - git
+      - build-essential
+      - nginx
+      - htop
+      - autoconf
+      - pkg-config
+      - autogen
+      - libtool
+      - manpages-dev
+      - ntp
+      
+  - name: set locale
+    lineinfile: dest=/var/lib/locales/supported.d/local line={{ item }}
+    with_items:
+      - 'en_US.UTF-8 UTF-8'
+      - 'zh_CN.UTF-8 UTF-8'
+      - 'zh_CN.GBK GBK'
+      - 'zh_CN GB2312'
+
+  - name: locale gen
+    locale_gen: name=zh_CN.UTF-8 state=present
+
+  - name: copy locale file
+    template: src=config/locale dest=/etc/default/locale
+  

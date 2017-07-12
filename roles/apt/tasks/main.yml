@@ -1,0 +1,27 @@
+---
+- name: Set apt sources.list to our preferred mirror
+  template: >
+    src=sources.list.j2
+    dest=/etc/apt/sources.list
+    owner=root group=root mode=644
+  become: yes
+  become_method: sudo
+  register: apt_sources_list
+
+- name: Update apt cache
+  apt: update_cache=yes
+  when: apt_sources_list|changed
+  become: yes
+  become_method: sudo
+
+- name: Update apt keys
+  command: apt-key update
+  when: apt_sources_list|changed
+  become: yes
+  become_method: sudo
+
+- name: Upgrade installed packages
+  apt: upgrade=yes update_cache=yes cache_valid_time=3600
+  when: apt_upgrade == true
+  become: yes
+  become_method: sudo

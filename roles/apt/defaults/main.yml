@@ -1,0 +1,3 @@
+---
+apt_mirror: "http://mirrors.aliyun.com/ubuntu/"
+apt_upgrade: false
