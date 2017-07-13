@@ -1,4 +1,4 @@
-TARGS=naive multproc multhread select poll epoll
+TARGS=naive multproc multhread select poll epoll epoll-et
 
 CC=gcc
 CFLAGS:=$(CFLAGS) #-I./ 

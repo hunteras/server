@@ -4,3 +4,4 @@
 !.gitignore
 httpserver.c
 epoll-example.c
+.*.c
